@@ -1,4 +1,4 @@
-# DuelBox Firware and Phonegap App
+# DuelBox Firmware and Phonegap App
 
 This project is currently in development
 
