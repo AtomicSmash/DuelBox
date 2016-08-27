@@ -139,11 +139,19 @@ var app = {
                 app.determineWriteType(peripheral);
 
                 // subscribe for incoming data
-                ble.startNotification(deviceId, bluefruit.serviceUUID, bluefruit.rxCharacteristic, app.onData, app.onError);
+                console.log('SIDE ID');
+                console.log(sideId);
+
+                if(sideId === 1){
+                    ble.startNotification(deviceId, bluefruit.serviceUUID, bluefruit.rxCharacteristic, app.onData, app.onError);
+                }else{
+                    ble.startNotification(deviceId, bluefruit.serviceUUID, bluefruit.rxCharacteristic, app.onDataRight, app.onError);
+                }
+
                 sendButton.dataset.deviceId = deviceId;
                 disconnectButton.dataset.deviceId = deviceId;
                 resultDiv.innerHTML = "";
-                resultDivRight.innerHTML = "asjkdhas";
+                resultDivRight.innerHTML = "";
                 app.showDetailPage();
             };
 
@@ -167,10 +175,18 @@ var app = {
 
     },
     onData: function(data) { // data received from Arduino
-        console.log('data:');
-        console.log(data);
+        // console.log('data:');
+        // console.log(data);
+
+
         resultDiv.innerHTML = resultDiv.innerHTML + "Received: " + bytesToString(data) + "<br/>";
         resultDiv.scrollTop = resultDiv.scrollHeight;
+    },
+    onDataRight: function(data) { // data received from Arduino
+        // console.log('data:');
+        // console.log(data);
+        resultDivRight.innerHTML = resultDiv.innerHTML + "Received: " + bytesToString(data) + "<br/>";
+        resultDivRight.scrollTop = resultDiv.scrollHeight;
     },
     sendData: function(event) { // send data to Arduino
 

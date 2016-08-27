@@ -12,9 +12,12 @@
         <div class="app">
             <h1>DuelBox</h1>
             <div id="mainPage">
-                <ul id="deviceList">
+                <ul id="deviceList" class='list-group deviceList'>
                 </ul>
-                <button id="refreshButton">Find</button>
+                <div class="refreshButton">
+                    <button class="btn btn-primary" id="refreshButton">Find DuelBoxes</button>
+                </div>
+
             </div>
             <div id="detailPage">
                 <div id="resultDiv"></div>
@@ -22,13 +25,25 @@
                     <input type="text" id="messageInput" value="Hello"/>
                     <button id="sendButton">Send</button>
                 </div>
-                <button id="disconnectButton">Disconnect</button>
+                <button id="disconnectButton" class='btn btn-warning'>Disconnect</button>
             </div>
+
+            <div id="mainPageRight">
+                <ul id="deviceListRight" class='list-group deviceList'>
+                </ul>
+            </div>
+            <div id="detailPageRight">
+                <div id="resultDivRight"></div>
+            </div>
+
         </div>
+
+
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
+
         </script>
     </body>
 </html>

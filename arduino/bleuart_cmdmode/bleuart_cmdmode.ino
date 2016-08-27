@@ -82,12 +82,13 @@ Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_
 
 // constants won't change. They're used here to
 // set pin numbers:
-const int buttonPin = 2;     // the number of the pushbutton pin
+const int buttonPin = 4;     // the number of the pushbutton pin
 const int ledPin =  3;      // the number of the LED pin
 // variables will change:
 int buttonState = 0;         // variable for reading the pushbutton status
 int clickCount = 0;         // variable for reading the pushbutton status
-
+unsigned long timeStart;
+unsigned long timeReceived;
 
 // A small helper
 void error(const __FlashStringHelper*err) {
@@ -103,7 +104,7 @@ void error(const __FlashStringHelper*err) {
 /**************************************************************************/
 void setup(void)
 {
-  while (!Serial);  // required for Flora & Micro
+ // while (!Serial);  // required for Flora & Micro
   delay(500);
 
   Serial.begin(115200);
@@ -138,7 +139,7 @@ void setup(void)
   ble.info();
 
     ble.print("AT+GAPDEVNAME=");
-    ble.println("DuelBox 1");
+    ble.println("DuelBox 2");
 
   ble.verbose(false);  // debug info is a little annoying after this point!
 
@@ -176,22 +177,47 @@ void loop(void)
   // read the state of the pushbutton value:
   buttonState = digitalRead(buttonPin);
 
+
+
+  //prints time since program started
+
   // check if the pushbutton is pressed.
   // if it is, the buttonState is HIGH:
   if (buttonState == HIGH) {
     // turn LED on:
     clickCount += 1;
-    Serial.println(clickCount);
+    //Serial.println(time);
+
+    //Serial.println(clickCount);
     String countOutput = "HIT #" + clickCount;
     digitalWrite(ledPin, HIGH);
     
+    timeStart = millis();
     ble.print("AT+BLEUARTTX=");
-    //ble.println("Hit");
-    ble.println(clickCount);
+    ble.println("Hit-");
+    //ble.println(clickCount);
 
-    delay(100);
-    digitalWrite(ledPin, LOW);
+    if (! ble.waitForOK() ) {
+      Serial.println(F("Failed to send?"));
+    }else{
+      //Serial.println("OK");
+      timeReceived = millis();
+      //Serial.print(timeStart);
+      //Serial.print(' : ');
+      //Serial.print(timeReceived);
+      //Serial.print(' = ');
+      Serial.print(timeReceived - timeStart);
+      ble.print("AT+BLEUARTTX=");
+      ble.println(timeReceived - timeStart);
+
+         
+      Serial.println("OK");
+    }
+
     delay(400);
+    
+    //digitalWrite(ledPin, LOW);
+    //delay(100);
   } else {
     // turn LED off:
     digitalWrite(ledPin, LOW);
