@@ -39,6 +39,17 @@ var bluefruit = {
     rxCharacteristic: '6e400003-b5a3-f393-e0a9-e50e24dcca9e'  // receive is from the phone's perspective
 };
 
+
+// var createDisconnectFunction = function(id) {
+//   // return a new function that knows the device id
+//   return function(reason) {
+//     console.log("Disconnected from " + id + ".");
+//   }
+// }
+// Then when connecting
+//
+// ble.connect(id, onConnect, createDisconnectFunction(id));
+
 var app = {
     initialize: function() {
         this.bindEvents();
@@ -50,12 +61,14 @@ var app = {
         sendButton.addEventListener('click', this.sendData, false);
         disconnectButton.addEventListener('touchstart', this.disconnect, false);
         deviceList.addEventListener('touchstart', this.connect, false); // assume not scrolling
+        deviceListRight.addEventListener('touchstart', this.connect, false); // assume not scrolling
     },
     onDeviceReady: function() {
         app.refreshDeviceList();
     },
     refreshDeviceList: function() {
         deviceList.innerHTML = ''; // empties the list
+        deviceListRight.innerHTML = ''; // empties the list
         if (cordova.platformId === 'android') { // Android filtering is broken
             ble.scan([], 5, app.onDiscoverDevice, app.onError);
         } else {
@@ -63,16 +76,64 @@ var app = {
         }
     },
     onDiscoverDevice: function(device) {
+        // <a href="#" class="list-group-item">Vestibulum at eros</a>
+
         var listItem = document.createElement('li'),
             html = '<b>' + device.name + '</b><br/>' +
                 'RSSI: ' + device.rssi + '&nbsp;|&nbsp;' +
                 device.id;
 
+
+
+        listItem.className = 'list-group-item';
+        listItem.dataset.sideId = 1;
         listItem.dataset.deviceId = device.id;
         listItem.innerHTML = html;
+
+        var listItemRight = document.createElement('li'),
+           html = '<b>' + device.name + '</b><br/>' +
+               'RSSI: ' + device.rssi + '&nbsp;|&nbsp;' +
+               device.id;
+
+        listItemRight.className = 'list-group-item';
+        listItemRight.dataset.sideId = 2;
+        listItemRight.dataset.deviceId = device.id;
+        listItemRight.innerHTML = html;
+
+
+
+
         deviceList.appendChild(listItem);
+        deviceListRight.appendChild(listItemRight);
+
+
     },
+    // populateRight: function(listItem) {
+    //
+    //
+    //     deviceList.appendChild(listItem);
+    // //    alert('second list');
+    //
+    //     //deviceList2.appendChild(listItem);
+    //
+    //
+    //
+    //
+    //
+    //
+    // },
+    // populateLeft: function(listItem) {
+    //
+    //
+    //     deviceList2.appendChild(listItem);
+    //
+    //
+    //
+    //
+    // },
     connect: function(e) {
+
+        var sideId = e.target.dataset.sideId;
         var deviceId = e.target.dataset.deviceId,
             onConnect = function(peripheral) {
                 app.determineWriteType(peripheral);
@@ -82,6 +143,7 @@ var app = {
                 sendButton.dataset.deviceId = deviceId;
                 disconnectButton.dataset.deviceId = deviceId;
                 resultDiv.innerHTML = "";
+                resultDivRight.innerHTML = "asjkdhas";
                 app.showDetailPage();
             };
 
@@ -105,6 +167,7 @@ var app = {
 
     },
     onData: function(data) { // data received from Arduino
+        console.log('data:');
         console.log(data);
         resultDiv.innerHTML = resultDiv.innerHTML + "Received: " + bytesToString(data) + "<br/>";
         resultDiv.scrollTop = resultDiv.scrollHeight;
