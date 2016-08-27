@@ -67,8 +67,8 @@ var app = {
         app.refreshDeviceList();
     },
     refreshDeviceList: function() {
-        deviceList.innerHTML = ''; // empties the list
-        deviceListRight.innerHTML = ''; // empties the list
+        //deviceList.innerHTML = ''; // empties the list
+        //deviceListRight.innerHTML = ''; // empties the list
         if (cordova.platformId === 'android') { // Android filtering is broken
             ble.scan([], 5, app.onDiscoverDevice, app.onError);
         } else {
