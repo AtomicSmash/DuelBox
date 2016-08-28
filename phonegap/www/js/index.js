@@ -54,6 +54,7 @@ var app = {
     initialize: function() {
         this.bindEvents();
         detailPage.hidden = true;
+        colourPanel.hidden = true;
     },
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
@@ -79,9 +80,7 @@ var app = {
         // <a href="#" class="list-group-item">Vestibulum at eros</a>
 
         var listItem = document.createElement('li'),
-            html = '<b>' + device.name + '</b><br/>' +
-                'RSSI: ' + device.rssi + '&nbsp;|&nbsp;' +
-                device.id;
+            html = '<b>' + device.name + '</b>';
 
 
 
@@ -91,9 +90,7 @@ var app = {
         listItem.innerHTML = html;
 
         var listItemRight = document.createElement('li'),
-           html = '<b>' + device.name + '</b><br/>' +
-               'RSSI: ' + device.rssi + '&nbsp;|&nbsp;' +
-               device.id;
+           html = '<b>' + device.name + '</b>';
 
         listItemRight.className = 'list-group-item';
         listItemRight.dataset.sideId = 2;
@@ -152,7 +149,8 @@ var app = {
                 disconnectButton.dataset.deviceId = deviceId;
                 resultDiv.innerHTML = "";
                 resultDivRight.innerHTML = "";
-                app.showDetailPage();
+                //app.showDetailPage();
+                app.showScoreTile();
             };
 
         ble.connect(deviceId, onConnect, app.onError);
@@ -185,6 +183,7 @@ var app = {
     onDataRight: function(data) { // data received from Arduino
         // console.log('data:');
         // console.log(data);
+        document.body.className+=' change';
         resultDivRight.innerHTML = resultDiv.innerHTML + "Received: " + bytesToString(data) + "<br/>";
         resultDivRight.scrollTop = resultDiv.scrollHeight;
     },
@@ -228,10 +227,15 @@ var app = {
         mainPage.hidden = false;
         detailPage.hidden = true;
     },
-    showDetailPage: function() {
-        mainPage.hidden = true;
-        detailPage.hidden = false;
+    showScoreTile: function() {
+        colourPanel.hidden = false;
+        //detailPage.hidden = true;
     },
+
+    // showDetailPage: function() {
+    //     mainPage.hidden = true;
+    //     detailPage.hidden = false;
+    // },
     onError: function(reason) {
         alert("ERROR: " + reason); // real apps should use notification.alert
     }

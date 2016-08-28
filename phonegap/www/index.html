@@ -11,21 +11,51 @@
     <body>
         <div class="app">
             <h1>DuelBox</h1>
-            <div id="mainPage">
+            <div id="mainPage" class='col-xs-6'>
                 <ul id="deviceList" class='list-group deviceList'>
+                    <li class="list-group-item">device 1</li>
+                    <li class="list-group-item">device 2</li>
+                </ul>
+                <div id='colourPanel'></div>
+            </div>
+
+
+            <div id="mainPageRight" class='col-xs-6'>
+                <ul id="deviceListRight" class='list-group deviceList'>
                     <li class="list-group-item">device 1</li>
                     <li class="list-group-item">device 2</li>
                     <li class="list-group-item">device 3</li>
                     <li class="list-group-item">device 4</li>
-                    <li class="list-group-item">device 5</li>
-                    <li class="list-group-item">device 6</li>
-                    <li class="list-group-item">device 7</li>
                 </ul>
-                <div class="refreshButton">
-                    <button class="btn btn-primary" id="refreshButton">Find DuelBoxes</button>
-                </div>
+                <!-- <div class="input-group">
+                    <select class="custom-select">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-success" type="button">Connect</button>
+                    </span>
+                </div> -->
+
+
+
 
             </div>
+
+            <div class="refreshButtons col-xs-12">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <button class="btn btn-primary" id="refreshButton">Refresh</button>
+                    </div>
+                    <div class="col-xs-6">
+                        <button class="btn btn-primary" id="refreshButton2">Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+
             <div id="detailPage">
                 <div id="resultDiv"></div>
                 <div>
@@ -35,15 +65,6 @@
                 <button id="disconnectButton" class='btn btn-warning'>Disconnect</button>
             </div>
 
-            <div id="mainPageRight">
-                <ul id="deviceListRight" class='list-group deviceList'>
-                    <li class="list-group-item">device 1</li>
-                    <li class="list-group-item">device 2</li>
-                    <li class="list-group-item">device 3</li>
-                    <li class="list-group-item">device 4</li>
-
-                </ul>
-            </div>
             <div id="detailPageRight">
                 <div id="resultDivRight"></div>
             </div>
@@ -55,7 +76,6 @@
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
-
         </script>
     </body>
 </html>
