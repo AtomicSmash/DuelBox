@@ -71,7 +71,7 @@ var app = {
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
         refreshButton.addEventListener('touchstart', this.refreshDeviceList, false);
-        // refreshButton2.addEventListener('touchstart', this.refreshDeviceList, false);
+        refreshButton2.addEventListener('touchstart', this.refreshDeviceList, false);
         //sendButton.addEventListener('click', this.sendData, false);
         disconnectButtonPrimary.addEventListener('touchstart', this.disconnectPrimary, false);
         disconnectButtonSecondary.addEventListener('touchstart', this.disconnectSecondary, false);
@@ -216,13 +216,13 @@ var app = {
                 // console.log(sideId);
 
                 if(sideId === 1){
-                    ble.startNotification(deviceId, bluefruit.serviceUUID, bluefruit.rxCharacteristic, app.onData, app.onError);
+                    ble.startNotification(deviceId, bluefruit.serviceUUID, bluefruit.rxCharacteristic, app.onDataPrimary, app.onError);
                     //app.showScoreTile('colourPanelPrimary');
                     //$('#connectionPagePrimary').addClass('connecting');
 
                     colourPanelPrimary.hidden = false;
                 }else{
-                    ble.startNotification(deviceId, bluefruit.serviceUUID, bluefruit.rxCharacteristic, app.onDataRight, app.onError);
+                    ble.startNotification(deviceId, bluefruit.serviceUUID, bluefruit.rxCharacteristic, app.onDataSecondary, app.onError);
                     //app.showScoreTile('colourPanelSecondary');
                     //
                     //
@@ -271,20 +271,29 @@ var app = {
         }
 
     },
-    onData: function(data) { // data received from Arduino
+    onDataPrimary: function(data) { // data received from Arduino
         // console.log('data:');
         // console.log(data);
 
+        $('#connectionPagePrimary').addClass('change');
 
-        resultDiv.innerHTML = resultDiv.innerHTML + "Received: " + bytesToString(data) + "<br/>";
-        resultDiv.scrollTop = resultDiv.scrollHeight;
+
+        setTimeout(function () {
+            $('#connectionPagePrimary').removeClass('change');
+        }, 1000);
+
     },
-    onDataRight: function(data) { // data received from Arduino
+    onDataSecondary: function(data) { // data received from Arduino
         // console.log('data:');
         // console.log(data);
-        document.body.className+=' change';
-        resultDivRight.innerHTML = resultDiv.innerHTML + "Received: " + bytesToString(data) + "<br/>";
-        resultDivRight.scrollTop = resultDiv.scrollHeight;
+
+        $('#connectionPageSecondary').addClass('change');
+
+
+        setTimeout(function () {
+            $('#connectionPageSecondary').removeClass('change');
+        }, 1000);
+
     },
     sendData: function(event) { // send data to Arduino
 

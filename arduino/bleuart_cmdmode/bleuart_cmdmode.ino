@@ -206,15 +206,15 @@ void loop(void)
       //Serial.print(' : ');
       //Serial.print(timeReceived);
       //Serial.print(' = ');
-      Serial.print(timeReceived - timeStart);
-      ble.print("AT+BLEUARTTX=");
-      ble.println(timeReceived - timeStart);
+      //Serial.print(timeReceived - timeStart);
+      //ble.print("AT+BLEUARTTX=");
+      //ble.println(timeReceived - timeStart);
 
          
       Serial.println("OK");
     }
 
-    delay(400);
+    delay(10000);
     
     //digitalWrite(ledPin, LOW);
     //delay(100);

@@ -8656,10 +8656,8 @@ h1{
 
 
 
-#connectionPagePrimary {
+#connectionPagePrimary,#connectionPageSecondary {
     height: 260px;
-    /* height: 3%; */
-    /* position: absolute; */
 }
 
 /*#connectionPagePrimary .fa{
@@ -8720,9 +8718,15 @@ h1{
     z-index: 1;
 }
 
-.change #colourPanel{
+.change #colourPanelPrimary{
     animation: color-me-in 1s; /* other keywords like "infinite alternate" can be useful here */
 }
+
+.change #colourPanelSecondary{
+    animation: color-me-in 1s; /* other keywords like "infinite alternate" can be useful here */
+}
+
+
 
 @keyframes color-me-in {
   /* You could think of as "step 1" */
