@@ -64,15 +64,28 @@ var bluefruit = {
 var app = {
     initialize: function() {
         this.bindEvents();
-        detailPage.hidden = true;
+        //detailPage.hidden = true;
         colourPanelPrimary.hidden = true;
+        colourPanelSecondary.hidden = true;
     },
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
         refreshButton.addEventListener('touchstart', this.refreshDeviceList, false);
-        sendButton.addEventListener('click', this.sendData, false);
-        disconnectButton.addEventListener('touchstart', this.disconnect, false);
-        deviceListPrimary.addEventListener('touchstart', this.connect, false); // assume not scrolling
+        // refreshButton2.addEventListener('touchstart', this.refreshDeviceList, false);
+        //sendButton.addEventListener('click', this.sendData, false);
+        disconnectButtonPrimary.addEventListener('touchstart', this.disconnectPrimary, false);
+        disconnectButtonSecondary.addEventListener('touchstart', this.disconnectSecondary, false);
+        //deviceListPrimary.addEventListener('touchstart', this.connect, false); // assume not scrolling
+        //
+        //
+        //$( "button" ).on( "click", notify );
+
+
+        $( "#deviceListPrimary" ).on( 'click', 'a', this.connect);
+
+        $( "#deviceListSecondary" ).on( 'click', 'a', this.connect);
+
+
         deviceListSecondary.addEventListener('touchstart', this.connect, false); // assume not scrolling
     },
     onDeviceReady: function() {
@@ -97,26 +110,45 @@ var app = {
             //     device.id;
         html = '<b>' + device.name + '</b>';
 
-        listItemPrimary.className = 'list-group-item';
-        listItemPrimary.dataset.sideId = 1;
-        listItemPrimary.dataset.deviceId = device.id;
-        listItemPrimary.innerHTML = html;
+        // listItemPrimary.className = 'list-group-item';
+        // listItemPrimary.dataset.sideId = 1;
+        // listItemPrimary.dataset.deviceId = device.id;
+        // listItemPrimary.innerHTML = html;
 
-        deviceListPrimary.appendChild(listItemPrimary);
+        var left = $('<a/>')
+             .addClass('list-group-item')
+             .attr('role', 'menuitem')
+             .html(html)
+             .data('sideId',1)
+             .data('deviceId',device.id)
+             .appendTo(deviceListPrimary);
+
+
+        var right = $('<a/>')
+             .addClass('list-group-item')
+             .attr('role', 'menuitem')
+             .html(html)
+             .data('sideId',2)
+             .data('deviceId',device.id)
+             .appendTo(deviceListSecondary);
+
+
+
+        //deviceListPrimary.appendChild(listItemPrimary);
 
 
         //Prepare Right list
-        var listItemSecondary = document.createElement('li'),
-        html = '<b>' + device.name + '</b>';
-
-
-        listItemSecondary.href = '#';
-        listItemSecondary.className = 'list-group-item';
-        listItemSecondary.dataset.sideId = 2;
-        listItemSecondary.dataset.deviceId = device.id;
-        listItemSecondary.innerHTML = html;
-
-        deviceListSecondary.appendChild(listItemSecondary);
+        // var listItemSecondary = document.createElement('li'),
+        // html = '<b>' + device.name + '</b>';
+        //
+        //
+        // listItemSecondary.href = '#';
+        // listItemSecondary.className = 'list-group-item';
+        // listItemSecondary.dataset.sideId = 2;
+        // listItemSecondary.dataset.deviceId = device.id;
+        // listItemSecondary.innerHTML = html;
+        //
+        // deviceListSecondary.appendChild(listItemSecondary);
 
 
     },
@@ -153,13 +185,29 @@ var app = {
 
         //$(e).addClass('selectedDevice');
 
+        //alert('asda');
 
-        mainPage.className = 'col-xs-6 connecting';
+        //console.log(e);
+
+        //connectionPagePrimary.className = 'col-xs-6 connecting';
 
 
 
-        var sideId = e.target.dataset.sideId;
-        var deviceId = e.target.dataset.deviceId,
+        var sideId = $(this).data('sideId');
+
+
+        if(sideId === 1){
+
+            $('#connectionPagePrimary').addClass('connecting');
+
+        }else{
+
+            $('#connectionPageSecondary').addClass('connecting');
+
+        }
+
+
+        var deviceId = $(this).data('deviceId'),
             onConnect = function(peripheral) {
                 app.determineWriteType(peripheral);
 
@@ -169,16 +217,37 @@ var app = {
 
                 if(sideId === 1){
                     ble.startNotification(deviceId, bluefruit.serviceUUID, bluefruit.rxCharacteristic, app.onData, app.onError);
+                    //app.showScoreTile('colourPanelPrimary');
+                    //$('#connectionPagePrimary').addClass('connecting');
+
+                    colourPanelPrimary.hidden = false;
                 }else{
                     ble.startNotification(deviceId, bluefruit.serviceUUID, bluefruit.rxCharacteristic, app.onDataRight, app.onError);
+                    //app.showScoreTile('colourPanelSecondary');
+                    //
+                    //
+                    //$('#connectionPageSecondary').addClass('connecting');
+
+                    colourPanelSecondary.hidden = false;
                 }
 
-                sendButton.dataset.deviceId = deviceId;
-                disconnectButton.dataset.deviceId = deviceId;
-                resultDiv.innerHTML = "";
-                resultDivRight.innerHTML = "";
-                //app.showDetailPage();
-                app.showScoreTile();
+                //sendButton.dataset.deviceId = deviceId;
+                disconnectButtonPrimary.dataset.deviceId = deviceId;
+                disconnectButtonSecondary.dataset.deviceId = deviceId;
+                // resultDiv.innerHTML = "";
+                // resultDivRight.innerHTML = "";
+
+
+                //detailPage.hidden = false;
+                // detailPage.hidden = true;
+
+                //$('#colourPanelPrimary').show();
+                //colourPanelPrimary.hidden = false;
+
+                //app.showScoreTile('colourPanelSecondary');
+
+
+
             };
 
         ble.connect(deviceId, onConnect, app.onError);
@@ -249,24 +318,40 @@ var app = {
         }
 
     },
-    disconnect: function(event) {
+    disconnectPrimary: function(event) {
+        var deviceId = event.target.dataset.deviceId;
+        // alert(deviceId)
+
+        ble.disconnect(deviceId, app.showPrimaryConnections, app.onError);
+    },
+    disconnectSecondary: function(event) {
 
 
         var deviceId = event.target.dataset.deviceId;
-        ble.disconnect(deviceId, app.showMainPage, app.onError);
-    },
-    showMainPage: function() {
-        mainPage.hidden = false;
-        detailPage.hidden = true;
+        // alert(deviceId)
 
-        mainPage.className = 'col-xs-6';
+        ble.disconnect(deviceId, app.showSecondaryConnections, app.onError);
+
+    },
+    showPrimaryConnections: function() {
+        connectionPagePrimary.hidden = false;
+        //detailPage.hidden = true;
+
+        connectionPagePrimary.className = 'col-xs-6';
         colourPanelPrimary.hidden = true;
 
     },
-    showScoreTile: function() {
-        colourPanelPrimary.hidden = false;
+    showSecondaryConnections: function() {
+
+
+        connectionPageSecondary.hidden = false;
         //detailPage.hidden = true;
+
+        connectionPageSecondary.className = 'col-xs-6';
+        colourPanelSecondary.hidden = true;
+
     },
+
 
     // showDetailPage: function() {
     //     mainPage.hidden = true;

@@ -10,44 +10,40 @@
     </head>
     <body>
         <div class="app">
-            <div id="mainPage" class='col-xs-6'>
-                <ul id="deviceListPrimary" class='list-group deviceList'>
-                </ul>
+            <div id="connectionPagePrimary" class='col-xs-6'>
+                <div id="deviceListPrimary" class='list-group deviceList'>
+                    <!-- <li href='#' class="list-group-item">device 1 <i class="fa fa-circle-o-notch fa-spin fa-fw"></i></li> -->
+                    <!-- <a href='#' class="list-group-item">device 1</a>
+                    <a href='#' class="list-group-item">device 1</a> -->
+                </div>
+
 
                 <div class="loadingWrapper">
                     <i class="fa fa-circle-o-notch fa-spin fa-fw fa-3x"></i>
                 </div>
 
-                <div id='colourPanelPrimary'><button id="disconnectButton" class='btn btn-warning disconnect'>Disconnect</button></div>
+                <div id='colourPanelPrimary'><button id="disconnectButtonPrimary" class='btn btn-warning disconnect'>Disconnect</button></div>
             </div>
 
 
 
-            <div id="mainPageRight" class='col-xs-6'>
-
-                <ul id="deviceListSecondary" class='list-group deviceList'>
+            <div id="connectionPageSecondary" class='col-xs-6'>
+                <div id="deviceListSecondary" class='list-group deviceList'>
                     <!-- <li href='#' class="list-group-item">device 1 <i class="fa fa-circle-o-notch fa-spin fa-fw"></i></li>
                     <a href='#' class="list-group-item">device 1</a>
                     <a href='#' class="list-group-item">device 1</a> -->
-                </ul>
+                    <!-- <a href='#' class="list-group-item">device 1</a>
+                    <a href='#' class="list-group-item">device 1</a> -->
+                </div>
 
-                <!-- <div class="input-group">
-                    <select class="custom-select">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" type="button">Connect</button>
-                    </span>
-                </div> -->
+                <div class="loadingWrapper">
+                    <i class="fa fa-circle-o-notch fa-spin fa-fw fa-3x"></i>
+                </div>
 
-
-                <div id='colourPanelSecondary'></div>
-
-
+                <div id='colourPanelSecondary'><button id="disconnectButtonSecondary" class='btn btn-warning disconnect'>Disconnect</button></div>
             </div>
+
+
 
             <div class="refreshButtons col-xs-12">
                 <div class="row">
@@ -61,17 +57,7 @@
             </div>
 
 
-            <div id="detailPage">
-                <div id="resultDiv"></div>
-                <div>
-                    <input type="text" id="messageInput" value="Hello"/>
-                    <button id="sendButton">Send</button>
-                </div>
-            </div>
 
-            <div id="detailPageRight">
-                <div id="resultDivRight"></div>
-            </div>
 
         </div>
 

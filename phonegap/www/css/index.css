@@ -8656,13 +8656,13 @@ h1{
 
 
 
-#mainPage {
+#connectionPagePrimary {
     height: 260px;
     /* height: 3%; */
     /* position: absolute; */
 }
 
-/*#mainPage .fa{
+/*#connectionPagePrimary .fa{
     display: none;
 }*/
 
@@ -8711,6 +8711,15 @@ h1{
     z-index: 1;
 }
 
+#colourPanelSecondary{
+    background: black;
+    width: 50%;
+    position: fixed;
+    height: 100%;
+    right: 0px;
+    z-index: 1;
+}
+
 .change #colourPanel{
     animation: color-me-in 1s; /* other keywords like "infinite alternate" can be useful here */
 }
@@ -8726,8 +8735,14 @@ h1{
   }
 }
 
-.disconnect{
+#disconnectButtonPrimary{
     position: fixed;
     bottom:20px;
     left: 20px;
+}
+
+#disconnectButtonSecondary{
+    position: fixed;
+    bottom:20px;
+    right: 20px;
 }
