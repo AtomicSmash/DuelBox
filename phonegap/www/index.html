@@ -3,30 +3,34 @@
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1,  target-densitydpi=device-dpi" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi" />
 
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>BluefruitLE</title>
     </head>
     <body>
         <div class="app">
-            <h1>DuelBox</h1>
             <div id="mainPage" class='col-xs-6'>
-                <ul id="deviceList" class='list-group deviceList'>
-                    <li class="list-group-item">device 1</li>
-                    <li class="list-group-item">device 2</li>
+                <ul id="deviceListPrimary" class='list-group deviceList'>
                 </ul>
-                <div id='colourPanel'></div>
+
+                <div class="loadingWrapper">
+                    <i class="fa fa-circle-o-notch fa-spin fa-fw fa-3x"></i>
+                </div>
+
+                <div id='colourPanelPrimary'><button id="disconnectButton" class='btn btn-warning disconnect'>Disconnect</button></div>
             </div>
 
 
+
             <div id="mainPageRight" class='col-xs-6'>
-                <ul id="deviceListRight" class='list-group deviceList'>
-                    <li class="list-group-item">device 1</li>
-                    <li class="list-group-item">device 2</li>
-                    <li class="list-group-item">device 3</li>
-                    <li class="list-group-item">device 4</li>
+
+                <ul id="deviceListSecondary" class='list-group deviceList'>
+                    <!-- <li href='#' class="list-group-item">device 1 <i class="fa fa-circle-o-notch fa-spin fa-fw"></i></li>
+                    <a href='#' class="list-group-item">device 1</a>
+                    <a href='#' class="list-group-item">device 1</a> -->
                 </ul>
+
                 <!-- <div class="input-group">
                     <select class="custom-select">
                         <option selected>Open this select menu</option>
@@ -40,6 +44,7 @@
                 </div> -->
 
 
+                <div id='colourPanelSecondary'></div>
 
 
             </div>
@@ -62,7 +67,6 @@
                     <input type="text" id="messageInput" value="Hello"/>
                     <button id="sendButton">Send</button>
                 </div>
-                <button id="disconnectButton" class='btn btn-warning'>Disconnect</button>
             </div>
 
             <div id="detailPageRight">
@@ -73,7 +77,9 @@
 
 
         <script type="text/javascript" src="cordova.js"></script>
+
         <script type="text/javascript" src="js/index.js"></script>
+
         <script type="text/javascript">
             app.initialize();
         </script>
